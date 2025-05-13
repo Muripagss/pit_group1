@@ -15,7 +15,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _registerUser() async {
-    const String apiUrl = "http://127.0.0.1:8000/api/register/"; // Change if needed
+    const String apiUrl = "http://127.0.0.1:8000/api/register/";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -28,15 +28,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     if (response.statusCode == 201) {
-      // Registration successful
+      // reg success
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Registered successfully!')),
       );
-      Navigator.pop(context); // or navigate to login screen
+      Navigator.pop(context); 
     } else {
       // Registration failed
       final Map<String, dynamic> errorData = jsonDecode(response.body);
-      String errorMessage = errorData['error'] ?? 'Registration failed';
+      String errorMessage = 'Registration failed';
+      errorData.forEach((key, value) {
+        errorMessage = "$key: ${value[0]}";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage)),
       );
