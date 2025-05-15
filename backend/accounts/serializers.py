@@ -2,6 +2,11 @@ from rest_framework import serializers
 from .models import CustomUser
 from django.contrib.auth import authenticate
 
+from rest_framework import serializers
+from .models import CustomUser
+from django.contrib.auth import authenticate
+from .utils import send_verification_email  
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -10,6 +15,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
+        user.is_active = False 
+        user.save()
+
+        # Send verification email
+        request = self.context.get('request')
+        send_verification_email(user, request) 
+
         return user
 
 class LoginSerializer(serializers.Serializer):
