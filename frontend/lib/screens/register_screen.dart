@@ -32,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Registered successfully!')),
       );
-      Navigator.pop(context); 
+      Navigator.pop(context);
     } else {
       // Registration failed
       final Map<String, dynamic> errorData = jsonDecode(response.body);
@@ -149,6 +149,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
+
+                        const SizedBox(height: 20),
+
+                        // New text button below REGISTER
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context); // or navigate to your Login screen explicitly
+                          },
+                          child: const Text(
+                            'Already have an account? Login',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+
                         const SizedBox(height: 40),
                       ],
                     ),

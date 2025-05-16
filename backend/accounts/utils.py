@@ -14,3 +14,13 @@ def send_verification_email(user, request):
     subject = "Verify your email"
     message = f"Click the link to verify your email:\n\n{verification_link}"
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+
+def send_password_reset_email(user, request):
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+    reset_link = request.build_absolute_uri(
+        reverse('password-reset-confirm', kwargs={'uidb64': uid, 'token': token})
+    )
+    subject = "Reset your password"
+    message = f"Click the link to reset your password:\n\n{reset_link}"
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])

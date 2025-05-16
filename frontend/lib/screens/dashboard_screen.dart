@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart'; // import your login screen here
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -23,12 +24,28 @@ class DashboardScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Logo
+                  // Row with logo and logout button
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Image.asset(
-                      'assets/logo.png',
-                      width: 70,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          'assets/logo.png',
+                          width: 70,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.logout, color: Colors.green),
+                          tooltip: 'Logout',
+                          onPressed: () {
+                            // Navigate back to LoginScreen, replacing current page
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
 
